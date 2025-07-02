@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://rg2bbybiivt8"]
+
+[ext_resource type="Script" uid="uid://f2xrb5ev1jmo" path="res://scripts/sequence_input.gd" id="1_74d4a"]
+
+[node name="SequenceInput" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -25.0
+offset_right = -960.0
+offset_bottom = -712.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_74d4a")
+
+[node name="Index" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 25.0
+text = "X"
+
+[node name="Input" type="Button" parent="."]
+layout_mode = 0
+offset_left = 50.0
+offset_right = 200.0
+offset_bottom = 31.0
+focus_mode = 0
+text = "{Insert Text}"
+
+[connection signal="pressed" from="Input" to="." method="_on_input_pressed"]

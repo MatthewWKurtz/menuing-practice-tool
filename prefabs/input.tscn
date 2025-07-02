@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4rjhwgq4mx0y"]
+
+[ext_resource type="Texture2D" uid="uid://b6socll4mj886" path="res://images/key.png" id="1_6sjcf"]
+[ext_resource type="Script" uid="uid://cbgx56s633m65" path="res://scripts/input.gd" id="2_ydnug"]
+
+[sub_resource type="Theme" id="Theme_6sjcf"]
+RichTextLabel/colors/default_color = Color(0, 0, 0, 1)
+
+[node name="Input" type="NinePatchRect"]
+custom_minimum_size = Vector2(80, 80)
+offset_right = 80.0
+offset_bottom = 80.0
+texture = ExtResource("1_6sjcf")
+patch_margin_left = 25
+patch_margin_top = 25
+patch_margin_right = 25
+patch_margin_bottom = 25
+script = ExtResource("2_ydnug")
+
+[node name="Text" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_6sjcf")
+bbcode_enabled = true
+text = "[color=red] Space [/color]"
+horizontal_alignment = 1
+vertical_alignment = 1

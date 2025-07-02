@@ -1,0 +1,354 @@
+[gd_scene load_steps=9 format=3 uid="uid://cn0oypf51tnu"]
+
+[ext_resource type="Shader" uid="uid://befrur3d57fp4" path="res://shaders/key.gdshader" id="1_0wfyh"]
+[ext_resource type="Script" uid="uid://duqeke8w0gxfg" path="res://scripts/menu practice.gd" id="1_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://b6socll4mj886" path="res://images/key.png" id="2_sugp2"]
+[ext_resource type="Theme" uid="uid://cqgd35wx3e45x" path="res://theme/Title.tres" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://ciupydp883xqt" path="res://scenes/menu create.gd" id="5_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://rg2bbybiivt8" path="res://prefabs/sequence input.tscn" id="6_tefeu"]
+[ext_resource type="Theme" uid="uid://clbnpupdccg8i" path="res://theme/Menu Stats.tres" id="7_o6xl0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jyhfs"]
+shader = ExtResource("1_0wfyh")
+shader_parameter/custom_color = Vector4(1, 0, 0, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jyhfs")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.252028, 0.252028, 0.252028, 1)
+
+[node name="Version" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -32.0
+offset_right = 98.0
+grow_vertical = 0
+bbcode_enabled = true
+text = "Version 0"
+
+[node name="Control Panel" type="NinePatchRect" parent="."]
+material = SubResource("ShaderMaterial_jyhfs")
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -270.0
+offset_right = 270.0
+offset_bottom = 270.0
+grow_vertical = 2
+texture = ExtResource("2_sugp2")
+patch_margin_left = 25
+patch_margin_top = 25
+patch_margin_right = 25
+patch_margin_bottom = 25
+
+[node name="Title" type="RichTextLabel" parent="Control Panel"]
+custom_minimum_size = Vector2(270, 50)
+layout_mode = 2
+offset_top = 12.0
+offset_right = 270.0
+offset_bottom = 62.0
+grow_horizontal = 2
+theme = ExtResource("3_sugp2")
+bbcode_enabled = true
+text = "Controls"
+horizontal_alignment = 1
+
+[node name="Buttons" type="Control" parent="Control Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Load" type="Button" parent="Control Panel/Buttons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -60.5
+offset_right = 69.0
+offset_bottom = -29.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+text = "Load Sequence"
+
+[node name="SequenceLoad" type="FileDialog" parent="Control Panel/Buttons/Load"]
+title = "Open a File"
+position = Vector2i(320, 180)
+ok_button_text = "Open"
+file_mode = 0
+access = 1
+root_subfolder = "C:\\Users\\MWGui\\AppData\\Roaming\\Godot\\app_userdata\\Menuing Practice"
+
+[node name="Save" type="Button" parent="Control Panel/Buttons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -15.5
+offset_right = 69.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+text = "Save Sequence"
+
+[node name="Create" type="Button" parent="Control Panel/Buttons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = 29.5
+offset_right = 69.0
+offset_bottom = 60.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+text = "Create Sequence"
+
+[node name="Create Window" type="Window" parent="Control Panel/Buttons/Create"]
+position = Vector2i(320, 180)
+size = Vector2i(640, 360)
+visible = false
+
+[node name="Control" type="Control" parent="Control Panel/Buttons/Create/Create Window"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_tbgi4")
+
+[node name="Sequence Length Text" type="RichTextLabel" parent="Control Panel/Buttons/Create/Create Window/Control"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 141.0
+offset_bottom = 30.0
+text = "Sequence Length"
+
+[node name="Sequence Length" type="SpinBox" parent="Control Panel/Buttons/Create/Create Window/Control"]
+layout_mode = 0
+offset_left = 140.0
+offset_right = 226.563
+offset_bottom = 31.0
+min_value = 1.0
+value = 1.0
+
+[node name="FPS Text" type="RichTextLabel" parent="Control Panel/Buttons/Create/Create Window/Control"]
+layout_mode = 0
+offset_left = 335.0
+offset_top = 2.0
+offset_right = 490.0
+offset_bottom = 30.0
+text = "Frames per second"
+
+[node name="FPS" type="SpinBox" parent="Control Panel/Buttons/Create/Create Window/Control"]
+layout_mode = 0
+offset_left = 487.0
+offset_right = 573.563
+offset_bottom = 31.0
+min_value = 1.0
+max_value = 240.0
+value = 60.0
+
+[node name="Name Text" type="RichTextLabel" parent="Control Panel/Buttons/Create/Create Window/Control"]
+layout_mode = 0
+offset_left = 335.0
+offset_top = 38.0
+offset_right = 490.0
+offset_bottom = 66.0
+text = "Name"
+
+[node name="Name" type="TextEdit" parent="Control Panel/Buttons/Create/Create Window/Control"]
+layout_mode = 0
+offset_left = 487.0
+offset_top = 34.0
+offset_right = 640.0
+offset_bottom = 66.0
+focus_mode = 1
+theme_override_font_sizes/font_size = 14
+
+[node name="Name Text2" type="RichTextLabel" parent="Control Panel/Buttons/Create/Create Window/Control"]
+layout_mode = 0
+offset_left = 335.0
+offset_top = 74.0
+offset_right = 490.0
+offset_bottom = 102.0
+text = "Max Attempt Track"
+
+[node name="MAT" type="SpinBox" parent="Control Panel/Buttons/Create/Create Window/Control"]
+layout_mode = 0
+offset_left = 487.0
+offset_top = 72.0
+offset_right = 573.563
+offset_bottom = 103.0
+min_value = 10.0
+value = 25.0
+
+[node name="Cancel" type="Button" parent="Control Panel/Buttons/Create/Create Window/Control"]
+layout_mode = 0
+offset_left = 515.0
+offset_top = 324.0
+offset_right = 635.0
+offset_bottom = 355.0
+focus_mode = 0
+text = "Cancel"
+
+[node name="Save" type="Button" parent="Control Panel/Buttons/Create/Create Window/Control"]
+layout_mode = 0
+offset_left = 390.0
+offset_top = 324.0
+offset_right = 510.0
+offset_bottom = 355.0
+focus_mode = 0
+text = "Save"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control Panel/Buttons/Create/Create Window/Control"]
+layout_mode = 0
+offset_top = 40.0
+offset_right = 320.0
+offset_bottom = 360.0
+
+[node name="Sequence" type="GridContainer" parent="Control Panel/Buttons/Create/Create Window/Control/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/v_separation = 33
+
+[node name="SequenceInput" parent="Control Panel/Buttons/Create/Create Window/Control/ScrollContainer/Sequence" instance=ExtResource("6_tefeu")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="Restart" type="Button" parent="Control Panel/Buttons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = 74.5
+offset_right = 71.5
+offset_bottom = 105.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+text = "Restart Sequence"
+
+[node name="Sequence Holder" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -370.0
+offset_top = -260.0
+offset_right = 634.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 12
+
+[node name="Menu Name" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 479.0
+offset_bottom = 55.0
+theme = ExtResource("7_o6xl0")
+text = "{Insert Name}"
+
+[node name="Completion Rate Text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 488.0
+offset_right = 764.0
+offset_bottom = 55.0
+theme = ExtResource("7_o6xl0")
+text = "Completion Rate:"
+
+[node name="Completion Rate" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 761.0
+offset_right = 855.0
+offset_bottom = 55.0
+theme = ExtResource("7_o6xl0")
+text = "-1%"
+
+[node name="Time Text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 951.0
+offset_right = 1054.0
+offset_bottom = 55.0
+theme = ExtResource("7_o6xl0")
+text = "Time:"
+
+[node name="Time" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 1047.0
+offset_right = 1279.0
+offset_bottom = 55.0
+theme = ExtResource("7_o6xl0")
+text = "0"
+
+[node name="PB Text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 951.0
+offset_top = 50.0
+offset_right = 1054.0
+offset_bottom = 105.0
+theme = ExtResource("7_o6xl0")
+text = "PB:"
+
+[node name="PB" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 1047.0
+offset_top = 50.0
+offset_right = 1279.0
+offset_bottom = 105.0
+theme = ExtResource("7_o6xl0")
+text = "0"
+
+[node name="FPS" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 1047.0
+offset_top = 659.0
+offset_right = 1279.0
+offset_bottom = 714.0
+theme = ExtResource("7_o6xl0")
+theme_override_font_sizes/normal_font_size = 24
+text = "0"
+
+[connection signal="pressed" from="Control Panel/Buttons/Load" to="." method="_on_load_pressed"]
+[connection signal="file_selected" from="Control Panel/Buttons/Load/SequenceLoad" to="." method="_on_sequence_load_file_selected"]
+[connection signal="pressed" from="Control Panel/Buttons/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="Control Panel/Buttons/Create" to="." method="_on_create_pressed"]
+[connection signal="value_changed" from="Control Panel/Buttons/Create/Create Window/Control/Sequence Length" to="Control Panel/Buttons/Create/Create Window/Control" method="_on_sequence_length_value_changed"]
+[connection signal="pressed" from="Control Panel/Buttons/Create/Create Window/Control/Cancel" to="Control Panel/Buttons/Create/Create Window/Control" method="_on_cancel_pressed"]
+[connection signal="pressed" from="Control Panel/Buttons/Create/Create Window/Control/Save" to="Control Panel/Buttons/Create/Create Window/Control" method="_on_save_pressed"]
+[connection signal="pressed" from="Control Panel/Buttons/Restart" to="." method="_on_restart_pressed"]
