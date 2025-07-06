@@ -39,7 +39,7 @@ offset_top = -32.0
 offset_right = 98.0
 grow_vertical = 0
 bbcode_enabled = true
-text = "Version 1.1"
+text = "Version 1.0"
 
 [node name="Control Panel" type="NinePatchRect" parent="."]
 material = SubResource("ShaderMaterial_jyhfs")
@@ -159,7 +159,7 @@ layout_mode = 0
 offset_left = 487.0
 offset_right = 573.563
 offset_bottom = 31.0
-min_value = 30.0
+min_value = 1.0
 max_value = 240.0
 value = 60.0
 
@@ -284,8 +284,7 @@ offset_bottom = 40.0
 
 [node name="Menu Name" type="RichTextLabel" parent="Information"]
 layout_mode = 0
-offset_left = 21.0
-offset_right = 487.0
+offset_right = 479.0
 offset_bottom = 55.0
 theme = ExtResource("7_o6xl0")
 text = "{Insert Name}"
@@ -359,7 +358,6 @@ theme = ExtResource("7_o6xl0")
 text = "0"
 
 [node name="FPS" type="RichTextLabel" parent="Information"]
-visible = false
 layout_mode = 0
 offset_left = 1047.0
 offset_top = 659.0

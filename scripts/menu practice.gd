@@ -15,15 +15,15 @@ var key_held: bool = false #Is true is a key is held. Is to prevent just holding
 var current_input: InputEvent
 var previous_input: InputEvent
 var can_continue: bool = true #Checks if you have either succeeded in the menu, or if you have failed the menu.
-@onready var completion_rate = $"Completion Rate"
-@onready var time_text = $Time
-@onready var personal_best = $PB
-@onready var menu_name = $"Menu Name"
+@onready var completion_rate = $"Information/Completion Rate"
+@onready var time_text = $"Information/Time"
+@onready var personal_best = $"Information/PB"
+@onready var menu_name = $"Information/Menu Name"
+@onready var average_time = $"Information/Average Time"
 var time: float = 0
 
 func _process(delta: float) -> void:
-	$FPS.text = str(Engine.get_frames_per_second())
-	
+	$Information/FPS.text = str(Engine.get_frames_per_second())
 	
 	if current_menu:
 		
@@ -50,7 +50,10 @@ func _process(delta: float) -> void:
 					can_continue = false
 					current_menu.add_attempt(true)
 					update_completion_rate()
+					average_time.text = "%.2f" % current_menu.get_avg_time()
+					current_menu.add_completion_time(time)
 					current_menu.check_for_pb(time)
+					save()
 					
 					personal_best.text = "%.2f" % current_menu.pb
 				#Continues to the next key
@@ -64,6 +67,7 @@ func _process(delta: float) -> void:
 				change_current_key_color("red")
 				current_menu.add_attempt(false)
 				update_completion_rate()
+				save()
 				can_continue = false
 		
 			previous_input = current_input
@@ -88,6 +92,9 @@ func change_current_key_color(color: String):
 	sequence_holder.get_child(current_index).change_color(color)
 
 func _on_restart_pressed() -> void:
+	if current_menu == null:
+		return
+	
 	for child in sequence_holder.get_children():
 		child.change_color("black")
 	
@@ -127,13 +134,18 @@ func _on_sequence_load_file_selected(path: String) -> void:
 	for data in sequence_data:
 		current_menu.set(data, sequence_data[data])
 	
+	#Changing FPS
 	Engine.max_fps = current_menu.fps
+	
 	
 	menu_name.text = current_menu.menu_name
 	update_completion_rate()
 	
 	personal_best.text = "%.2f" % current_menu.pb
+	average_time.text = "%.2f" % current_menu.get_avg_time()
 	load_input_sequence()
+	
+	
 	await get_tree().create_timer(0.01).timeout
 	_on_restart_pressed()
 
@@ -150,7 +162,7 @@ func go_to_next_key():
 	current_key = sequence_holder.get_child(current_index).input
 	#print(current_key)
 
-func _on_save_pressed() -> void:
+func save() -> void:
 	var file = FileAccess.open("user://" + str(current_menu.menu_name) + ".menu", FileAccess.WRITE)
 	var dict = {
 		"input_array":current_menu.input_array,
@@ -158,7 +170,30 @@ func _on_save_pressed() -> void:
 		"fps":current_menu.fps,
 		"max_attempt_track":current_menu.max_attempt_track,
 		"attempts": current_menu.attempts,
-		"pb": current_menu.pb
+		"pb": current_menu.pb,
+		"completion_times": current_menu.completion_times
 	}
 	var save_string = JSON.stringify(dict)
 	file.store_string(save_string)
+
+func unload() -> void:
+	current_menu = null
+	Engine.max_fps = 60
+	
+	
+	menu_name.text = "{Insert Name}"
+	completion_rate.text = "-1%"
+	
+	personal_best.text ="0"
+	average_time.text = "0"
+	for child in sequence_holder.get_children():
+		child.queue_free()
+	
+
+func _on_edit_pressed() -> void:
+	if current_menu == null:
+		return
+	
+	
+	$"Control Panel/Buttons/Create/Create Window/Control".load_sequence_info(current_menu)
+	create_window.show()
